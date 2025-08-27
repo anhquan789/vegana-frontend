@@ -1,0 +1,71 @@
+.course-card {
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.04);
+  padding: 32px 24px;
+  min-width: 320px;
+  max-width: 340px;
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+.course-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.course-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+}
+.badge-new {
+  background: #ff6b00;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-left: 8px;
+}
+.course-card-desc {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 8px;
+}
+.course-card-pricing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.old-price {
+  color: #bbb;
+  text-decoration: line-through;
+  font-size: 15px;
+}
+.price {
+  color: #ff6b00;
+  font-size: 18px;
+  font-weight: 700;
+}
+.course-card-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #888;
+}
+.blue {
+  background: linear-gradient(120deg, #3a8fff 0%, #6a82fb 100%);
+  color: #fff;
+}
+.yellow {
+  background: linear-gradient(120deg, #ffe259 0%, #ffa751 100%);
+  color: #fff;
+}
+.pink {
+  background: linear-gradient(120deg, #ffb6b9 0%, #fa709a 100%);
+  color: #fff;
+}
