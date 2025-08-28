@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../home/Sidebar';
+import Sidebar from '../../app/home/Sidebar';
 import styles from './AppLayout.module.css';
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {

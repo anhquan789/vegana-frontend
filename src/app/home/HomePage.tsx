@@ -1,4 +1,4 @@
-import AppLayout from '../layout/AppLayout';
+import AppLayout from '../../components/layout/AppLayout';
 import Banner from './Banner';
 import CourseList from './CourseList';
 import Header from './Header';
