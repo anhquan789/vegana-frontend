@@ -1,0 +1,48 @@
+.playlist {
+  width: 350px;
+  background: #f7f8fa;
+  padding: 16px;
+  border-left: 1px solid #e7e7e7;
+}
+.playlist h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.section {
+  margin-bottom: 16px;
+}
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.lessonList {
+  list-style: none;
+  padding: 0;
+}
+.lessonItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+.lessonItem.active {
+  background: #ffebe6;
+  color: #ff6b00;
+}
+.lessonTitle {
+  flex-grow: 1;
+}
+.doneIcon {
+  color: green;
+  margin-left: 8px;
+}
+.lockIcon {
+  color: #999;
+  margin-left: 8px;
+}

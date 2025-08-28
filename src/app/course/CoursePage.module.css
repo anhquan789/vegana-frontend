@@ -1,0 +1,14 @@
+.coursePage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.mainLayout {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+.contentArea {
+  flex-grow: 1;
+  overflow-y: auto;
+}

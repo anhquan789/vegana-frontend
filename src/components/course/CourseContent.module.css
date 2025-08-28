@@ -1,0 +1,46 @@
+.content {
+  padding: 24px;
+  background: #fff;
+}
+.content h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.updated {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}
+.addNote {
+  background: #f0f0f0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.content ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+.content li {
+  margin-bottom: 8px;
+}
+.content a {
+  color: #007bff;
+  text-decoration: none;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.askQuestion {
+  background: #ff6b00;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}

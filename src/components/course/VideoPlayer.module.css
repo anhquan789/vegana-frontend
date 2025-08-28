@@ -1,0 +1,32 @@
+.videoContainer {
+  position: relative;
+  background: #000;
+}
+.videoPlaceholder {
+  position: relative;
+}
+.videoPlaceholder img {
+  width: 100%;
+  height: auto;
+}
+.playButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.playButton::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 15px 0 15px 25px;
+  border-color: transparent transparent transparent white;
+}

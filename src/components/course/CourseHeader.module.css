@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: #29303b;
+  color: #fff;
+}
+.left, .right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.backIcon {
+  cursor: pointer;
+  font-weight: bold;
+}
+.logo {
+  background: #ff6b00;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.courseTitle {
+  font-weight: 600;
+}
+.progress {
+  font-size: 14px;
+}
+.btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
