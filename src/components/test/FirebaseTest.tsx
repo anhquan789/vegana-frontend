@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { firestoreService, storageService } from '../../lib/firebaseService';
 import styles from './FirebaseTest.module.css';
 
@@ -129,10 +129,10 @@ const FirebaseTest = () => {
         {storageResult && (
           <div className={`${styles.result} ${storageResult.success ? styles.success : styles.error}`}>
             <p>{storageResult.message}</p>
-            {storageResult.data && storageResult.data.url && (
+            {storageResult.data && typeof storageResult.data.url === 'string' && (
               <p>
                 <strong>Download URL:</strong> <br />
-                <a href={String(storageResult.data.url)} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                <a href={storageResult.data.url} target="_blank" rel="noopener noreferrer" className={styles.link}>
                   View uploaded file
                 </a>
               </p>

@@ -1,7 +1,6 @@
 'use client';
-import React from 'react';
-import SimpleTest from '../../components/test/SimpleTest';
 import FirebaseTestAdvanced from '../../components/test/FirebaseTestAdvanced';
+import SimpleTest from '../../components/test/SimpleTest';
 
 export default function TestPage() {
   return (
