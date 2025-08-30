@@ -1,4 +1,7 @@
 
+'use client';
+
+import Link from 'next/link';
 import styles from './Sidebar.module.css';
 
 const Sidebar = () => {
@@ -13,6 +16,11 @@ const Sidebar = () => {
           <li className={styles.active}><span>Trang chủ</span></li>
           <li><span>Lộ trình</span></li>
           <li><span>Bài viết</span></li>
+          <li>
+            <Link href="/admin" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <span>🎓 Admin</span>
+            </Link>
+          </li>
         </ul>
       </nav>
     </aside>
