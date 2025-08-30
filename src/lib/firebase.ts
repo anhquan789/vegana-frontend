@@ -24,19 +24,17 @@ const storage = getStorage(app);
 // Connect to emulators in development
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   try {
-    // Connect to Firestore emulator
     connectFirestoreEmulator(db, '127.0.0.1', 8080);
-    console.log('Connected to Firestore emulator');
-  } catch (error) {
-    console.log('Firestore emulator already connected or connection failed:', error);
+    console.log('✅ Connected to Firestore emulator at 127.0.0.1:8080');
+  } catch {
+    console.log('Firestore emulator already connected or connection failed');
   }
   
   try {
-    // Connect to Storage emulator  
     connectStorageEmulator(storage, '127.0.0.1', 9199);
-    console.log('Connected to Storage emulator');
-  } catch (error) {
-    console.log('Storage emulator already connected or connection failed:', error);
+    console.log('✅ Connected to Storage emulator at 127.0.0.1:9199');
+  } catch {
+    console.log('Storage emulator already connected or connection failed');
   }
 }
 

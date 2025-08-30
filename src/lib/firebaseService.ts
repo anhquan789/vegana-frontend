@@ -48,7 +48,7 @@ export const storageService = {
       console.log('Testing Storage connection...');
       const testData = `Test upload at ${new Date().toISOString()}\nThis is a test file for Firebase Storage connection.`;
       const fileName = `test-${Date.now()}.txt`;
-      const storageRef = ref(storage, `test/${fileName}`);
+      const storageRef = ref(storage, `test-uploads/${fileName}`);
       
       console.log('Uploading to:', storageRef.fullPath);
       const snapshot = await uploadString(storageRef, testData);
