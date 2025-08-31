@@ -1,3 +1,14 @@
+.course-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.course-card-link:hover {
+  transform: translateY(-4px);
+}
+
 .course-card {
   border-radius: 16px;
   background: #fff;
@@ -10,6 +21,11 @@
   flex-direction: column;
   gap: 12px;
   position: relative;
+  transition: box-shadow 0.2s ease;
+}
+
+.course-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.12);
 }
 .course-card-header {
   display: flex;

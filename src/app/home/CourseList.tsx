@@ -1,45 +1,49 @@
 import CourseCard, { CourseCardProps } from './CourseCard';
-import styles from './CourseList.module.css';
 
 const courses: CourseCardProps[] = [
   {
-    title: 'HTML, CSS Pro',
+    title: 'Lập Trình JavaScript Nâng Cao',
     description: 'Cho người mới bắt đầu',
-    price: '1.299.000đ',
+    price: 'Miễn phí',
     oldPrice: '2.500.000đ',
-    time: '116h50p',
+    time: '40h50p',
     students: 590,
     author: 'Sơn Đặng',
     color: 'blue',
     isNew: true,
+    slug: 'javascript-nang-cao',
   },
   {
-    title: 'JavaScript Pro',
-    description: 'Cho người mới bắt đầu',
-    price: '1.399.000đ',
+    title: 'ReactJS Cơ Bản',
+    description: 'Cho Frontend Developer',
+    price: 'Miễn phí',
     oldPrice: '3.299.000đ',
-    time: '47h11p',
+    time: '30h11p',
     students: 241,
     author: 'Sơn Đặng',
     color: 'yellow',
+    slug: 'reactjs-co-ban',
   },
   {
-    title: 'Ngôn ngữ Sass',
-    description: 'Cho Frontend Developer',
+    title: 'Node.js & Express',
+    description: 'Cho Backend Developer',
     price: '299.000đ',
     oldPrice: '400.000đ',
-    time: '6h18p',
-    students: 27,
+    time: '25h18p',
+    students: 127,
     author: 'Sơn Đặng',
     color: 'pink',
+    slug: 'nodejs-express',
   },
 ];
 
 const CourseList = () => {
   return (
-    <section className={styles['course-list']}>
-      <h3>Khóa học Pro <span className={styles['badge-new']}>MỚI</span></h3>
-      <div className={styles['course-list-grid']}>
+    <section className="py-8 px-6">
+      <h3 className="text-2xl font-bold mb-6">
+        Khóa học Pro <span className="bg-orange-500 text-white text-sm font-semibold rounded-md px-2 py-1 ml-2">MỚI</span>
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course, idx) => (
           <CourseCard key={idx} {...course} />
         ))}

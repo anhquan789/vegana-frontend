@@ -1,3 +1,6 @@
+import Breadcrumb from "@/components/common/Breadcrumb";
+import MainNavigation from "@/components/common/MainNavigation";
+import { AuthProvider } from "@/contexts/AuthContext";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -14,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
+        <AuthProvider>
+          <MainNavigation />
+          <Breadcrumb />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

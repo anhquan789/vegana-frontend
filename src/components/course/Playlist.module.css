@@ -1,48 +1,142 @@
 .playlist {
   width: 350px;
   background: #f7f8fa;
-  padding: 16px;
+  padding: 0;
   border-left: 1px solid #e7e7e7;
+  height: 100vh;
+  overflow-y: auto;
 }
-.playlist h3 {
+
+.header {
+  padding: 16px;
+  border-bottom: 1px solid #e7e7e7;
+  background: white;
+}
+
+.header h3 {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin: 0 0 8px 0;
 }
+
+.stats {
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+}
+
 .section {
-  margin-bottom: 16px;
+  margin: 0;
 }
+
 .sectionHeader {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-weight: bold;
-  margin-bottom: 8px;
+  padding: 12px 16px;
+  background: #f0f0f0;
   cursor: pointer;
+  border-bottom: 1px solid #e7e7e7;
 }
+
+.arrow {
+  font-size: 12px;
+  color: #666;
+}
+
 .lessonList {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
+
 .lessonItem {
   display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  border-radius: 4px;
-  margin-bottom: 4px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
+
+.lessonItem:hover {
+  background-color: #f9f9f9;
+}
+
 .lessonItem.active {
   background: #ffebe6;
   color: #ff6b00;
+  border-left: 3px solid #ff6b00;
 }
-.lessonTitle {
+
+.lessonItem.locked {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.lessonNumber {
+  font-weight: 500;
+  margin-right: 8px;
+  min-width: 20px;
+}
+
+.lessonInfo {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
-.doneIcon {
-  color: green;
+
+.lessonTitle {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.lessonDuration {
+  font-size: 12px;
+  color: #666;
+}
+
+.lessonStatus {
   margin-left: 8px;
 }
+
+.doneIcon {
+  color: #28a745;
+  font-weight: bold;
+}
+
 .lockIcon {
   color: #999;
-  margin-left: 8px;
+  font-size: 12px;
+}
+
+.navigation {
+  padding: 16px;
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid #e7e7e7;
+  background: white;
+}
+
+.navBtn {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: #f8f9fa;
+}
+
+.navBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
