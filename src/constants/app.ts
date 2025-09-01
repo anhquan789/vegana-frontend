@@ -7,17 +7,17 @@ export const APP_CONFIG = {
 
 export const ROUTES = {
   HOME: '/',
-  LOGIN: '/login',
-  REGISTER: '/register',
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
   PROFILE: '/profile',
   ADMIN: '/admin',
   DASHBOARD: '/dashboard',
   COURSES: '/courses',
-  COURSE_DETAIL: '/course',
+  COURSE_DETAIL: '/courses',
   MY_COURSES: '/my-courses',
   UNAUTHORIZED: '/unauthorized',
   VERIFY_EMAIL: '/verify-email',
-  FORGOT_PASSWORD: '/forgot-password'
+  FORGOT_PASSWORD: '/auth/forgot-password'
 } as const;
 
 // Smart navigation routes based on user roles
@@ -26,7 +26,7 @@ export const DEFAULT_ROUTES = {
   INSTRUCTOR: '/dashboard',
   STUDENT: '/dashboard',
   UNVERIFIED: '/verify-email',
-  GUEST: '/course'
+  GUEST: '/courses'
 } as const;
 
 export const USER_ROLES = {

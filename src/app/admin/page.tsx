@@ -1,21 +1,27 @@
 'use client';
 
+import { useState } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import VideoManagement from '../../components/admin/VideoManagement';
 import LearnerManagement from '../../components/admin/LearnerManagement';
 import NotificationSystem from '../../components/admin/NotificationSystem';
 import StatisticsDashboard from '../../components/admin/StatisticsDashboard';
-import { useState } from 'react';
+import VideoManagement from '../../components/admin/VideoManagement';
+import CourseManagement from '../../components/course/CourseManagement';
+import QuizManagement from '../../components/quiz/QuizManagement';
 
-type TabType = 'videos' | 'learners' | 'notifications' | 'statistics';
+type TabType = 'courses' | 'videos' | 'quizzes' | 'learners' | 'notifications' | 'statistics';
 
 const AdminPage = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('videos');
+  const [activeTab, setActiveTab] = useState<TabType>('courses');
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'courses':
+        return <CourseManagement />;
       case 'videos':
         return <VideoManagement />;
+      case 'quizzes':
+        return <QuizManagement />;
       case 'learners':
         return <LearnerManagement />;
       case 'notifications':
@@ -23,7 +29,7 @@ const AdminPage = () => {
       case 'statistics':
         return <StatisticsDashboard />;
       default:
-        return <VideoManagement />;
+        return <CourseManagement />;
     }
   };
 

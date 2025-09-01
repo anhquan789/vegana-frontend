@@ -1,13 +1,13 @@
 'use client';
 
-import StudentDashboard from '@/components/student/StudentDashboard';
+import PaymentHistory from '@/components/payment/PaymentHistory';
 import { ROUTES } from '@/constants/app';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function DashboardPage() {
-  const { isAuthenticated, loading, userProfile } = useAuth();
+export default function PaymentHistoryPage() {
+  const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -27,13 +27,9 @@ export default function DashboardPage() {
     );
   }
 
-  if (!isAuthenticated || !userProfile) {
-    return null; // Will redirect to login
+  if (!isAuthenticated) {
+    return null;
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <StudentDashboard />
-    </div>
-  );
+  return <PaymentHistory />;
 }

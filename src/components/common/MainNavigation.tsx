@@ -20,7 +20,7 @@ export default function MainNavigation() {
   const handleLogout = async () => {
     try {
       await logout();
-      router.push('/course'); // Redirect to public courses page
+      router.push('/courses'); // Redirect to public courses page
     } catch (error) {
       console.error('Logout error:', error);
     }
@@ -58,11 +58,13 @@ export default function MainNavigation() {
 
             {/* Main Navigation */}
             <div className="hidden md:flex space-x-4">
-              <NavLink href="/course">Khóa học</NavLink>
+              <NavLink href="/courses">Khóa học</NavLink>
               
               {isAuthenticated && (
                 <>
                   <NavLink href="/dashboard">Bảng điều khiển</NavLink>
+                  <NavLink href="/certificates">Chứng chỉ</NavLink>
+                  <NavLink href="/payment/history">Thanh toán</NavLink>
                   {userProfile?.role === 'admin' && (
                     <NavLink href="/admin">Quản trị</NavLink>
                   )}

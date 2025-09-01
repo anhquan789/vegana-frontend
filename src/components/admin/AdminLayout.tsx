@@ -2,7 +2,7 @@
 
 import styles from './AdminLayout.module.css';
 
-type TabType = 'videos' | 'learners' | 'notifications' | 'statistics';
+type TabType = 'courses' | 'videos' | 'quizzes' | 'learners' | 'notifications' | 'statistics';
 
 interface AdminLayoutProps {
   activeTab: TabType;
@@ -12,9 +12,11 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ activeTab, onTabChange, children }: AdminLayoutProps) => {
   const tabs = [
+    { id: 'courses' as TabType, label: 'Quản lý Khóa học', icon: '📚' },
     { id: 'videos' as TabType, label: 'Quản lý Video', icon: '🎬' },
+    { id: 'quizzes' as TabType, label: 'Quản lý Quiz', icon: '📝' },
     { id: 'learners' as TabType, label: 'Quản lý Học viên', icon: '👥' },
-    { id: 'notifications' as TabType, label: 'Thông báo & Quiz', icon: '📢' },
+    { id: 'notifications' as TabType, label: 'Thông báo', icon: '📢' },
     { id: 'statistics' as TabType, label: 'Thống kê', icon: '📊' },
   ];
 
