@@ -85,12 +85,13 @@ export const getAllCourses = async (filters?: {
       q = query(q, where('level', '==', filters.level));
     }
     
-    if (filters?.status) {
+    if (filters?.status && filters.status !== 'all') {
       q = query(q, where('status', '==', filters.status));
-    } else {
+    } else if (!filters?.status) {
       // Default to published courses only
       q = query(q, where('status', '==', 'published'));
     }
+    // If status is 'all', don't add status filter
     
     q = query(q, orderBy('createdAt', 'desc'));
     

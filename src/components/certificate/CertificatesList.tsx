@@ -2,15 +2,24 @@
 
 import { ROUTES } from '@/constants/app';
 import { useAuth } from '@/contexts/AuthContext';
-import {
-    Certificate,
-    formatCertificateDate,
-    getGradeColor,
-    getGradeText,
-    getStudentCertificates
-} from '@/lib/certificate/certificateService';
+import { getStudentCertificatesData } from '@/lib/dashboard/dashboardService';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+// Types for certificates
+interface Certificate {
+  id: string;
+  courseId: string;
+  courseName: string;
+  studentName: string;
+  completionDate: string;
+  grade: string;
+  instructorName: string;
+  certificateUrl: string;
+  duration: number;
+  skills: string[];
+  isValid: boolean;
+}
 
 export default function CertificatesList() {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
@@ -23,10 +32,12 @@ export default function CertificatesList() {
       
       setLoading(true);
       try {
-        const studentCertificates = await getStudentCertificates(userProfile.uid);
-        setCertificates(studentCertificates);
+        console.log('🏆 Loading certificates for user:', userProfile.uid);
+        const certificatesData = await getStudentCertificatesData(userProfile.uid);
+        setCertificates(certificatesData);
       } catch (error) {
         console.error('Error loading certificates:', error);
+        setCertificates([]);
       } finally {
         setLoading(false);
       }
@@ -34,6 +45,23 @@ export default function CertificatesList() {
 
     loadCertificates();
   }, [userProfile?.uid]);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('vi-VN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const getGradeColor = (grade: string) => {
+    switch (grade) {
+      case 'A': return 'text-green-600 bg-green-100';
+      case 'B': return 'text-blue-600 bg-blue-100';
+      case 'C': return 'text-yellow-600 bg-yellow-100';
+      default: return 'text-gray-600 bg-gray-100';
+    }
+  };
 
   if (loading) {
     return (
@@ -92,7 +120,7 @@ export default function CertificatesList() {
                   </div>
                   
                   <h3 className="text-lg font-bold mb-2 line-clamp-2">
-                    {certificate.courseTitle}
+                    {certificate.courseName}
                   </h3>
                   
                   <div className="text-sm opacity-90">
@@ -114,14 +142,14 @@ export default function CertificatesList() {
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0h8m-8 0l-4 14m4-14h8m-8 0l8 14M5 11l7-7 7 7" />
                       </svg>
-                      Hoàn thành: {formatCertificateDate(certificate.completedAt)}
+                      Hoàn thành: {formatDate(certificate.completionDate)}
                     </div>
                     
                     <div className="flex items-center text-sm text-gray-600">
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                       </svg>
-                      Cấp ngày: {formatCertificateDate(certificate.issuedAt)}
+                      Cấp ngày: {formatDate(certificate.completionDate)}
                     </div>
 
                     {certificate.grade && (
@@ -130,7 +158,7 @@ export default function CertificatesList() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                         Điểm: <span className={`font-semibold ${getGradeColor(certificate.grade)}`}>
-                          {certificate.grade}/100 ({getGradeText(certificate.grade)})
+                          {certificate.grade}
                         </span>
                       </div>
                     )}
@@ -164,7 +192,7 @@ export default function CertificatesList() {
                     <button
                       onClick={() => {
                         // Copy verification code to clipboard
-                        navigator.clipboard.writeText(certificate.verificationCode);
+                        navigator.clipboard.writeText(certificate.id);
                         alert('Đã copy mã xác thực!');
                       }}
                       className="flex-1 bg-gray-100 text-gray-700 text-center py-2 px-4 rounded-md hover:bg-gray-200 transition-colors text-sm font-medium"
@@ -177,7 +205,7 @@ export default function CertificatesList() {
                   <div className="mt-3 text-center">
                     <div className="text-xs text-gray-500">Mã xác thực:</div>
                     <div className="text-sm font-mono text-gray-700 bg-gray-50 px-2 py-1 rounded">
-                      {certificate.verificationCode}
+                      {certificate.id}
                     </div>
                   </div>
                 </div>
@@ -198,7 +226,7 @@ export default function CertificatesList() {
             
             <div className="bg-white rounded-lg shadow p-6 text-center">
               <div className="text-3xl font-bold text-green-600 mb-2">
-                {certificates.filter(c => c.grade && c.grade >= 80).length}
+                {certificates.filter(c => c.grade === 'A').length}
               </div>
               <div className="text-gray-600">Loại giỏi trở lên</div>
             </div>

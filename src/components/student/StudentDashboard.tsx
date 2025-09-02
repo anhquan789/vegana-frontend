@@ -1,40 +1,19 @@
 'use client';
 
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  EnrolledCourseWithProgress,
+  getStudentDashboardData,
+  LearningStats,
+  RecentActivity
+} from '@/lib/dashboard/dashboardService';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-interface EnrolledCourse {
-  id: string;
-  title: string;
-  thumbnail: string;
-  instructor: string;
-  progress: number;
-  totalLessons: number;
-  completedLessons: number;
-  lastAccessed: string;
-  category: string;
-}
-
-interface RecentActivity {
-  id: string;
-  type: 'lesson_completed' | 'quiz_passed' | 'course_enrolled' | 'certificate_earned';
-  title: string;
-  courseTitle: string;
-  timestamp: string;
-  description: string;
-}
-
-interface LearningStats {
-  totalCoursesEnrolled: number;
-  totalCoursesCompleted: number;
-  totalLessonsCompleted: number;
-  totalHoursLearned: number;
-  currentStreak: number;
-  totalCertificates: number;
-}
-
 const StudentDashboard = () => {
-  const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([]);
+  const { userProfile } = useAuth();
+  const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourseWithProgress[]>([]);
   const [recentActivities, setRecentActivities] = useState<RecentActivity[]>([]);
   const [stats, setStats] = useState<LearningStats>({
     totalCoursesEnrolled: 0,
@@ -46,72 +25,38 @@ const StudentDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  // Mock data - replace with actual API calls
+  // Load real data from Firebase
   useEffect(() => {
     const loadDashboardData = async () => {
+      if (!userProfile?.uid) return;
+
       try {
-        // Mock data
-        setEnrolledCourses([
-          {
-            id: '1',
-            title: 'React và Next.js Fundamentals',
-            thumbnail: '/course-thumb-1.jpg',
-            instructor: 'Nguyễn Văn A',
-            progress: 65,
-            totalLessons: 20,
-            completedLessons: 13,
-            lastAccessed: '2024-01-10',
-            category: 'Web Development'
-          },
-          {
-            id: '2',
-            title: 'JavaScript ES6+ Advanced',
-            thumbnail: '/course-thumb-2.jpg',
-            instructor: 'Trần Thị B',
-            progress: 30,
-            totalLessons: 15,
-            completedLessons: 4,
-            lastAccessed: '2024-01-08',
-            category: 'Programming'
-          }
-        ]);
-
-        setRecentActivities([
-          {
-            id: '1',
-            type: 'lesson_completed',
-            title: 'Hoàn thành bài học "React Hooks"',
-            courseTitle: 'React và Next.js Fundamentals',
-            timestamp: '2024-01-10T14:30:00Z',
-            description: 'Bạn đã hoàn thành bài học về React Hooks'
-          },
-          {
-            id: '2',
-            type: 'quiz_passed',
-            title: 'Vượt qua quiz "JavaScript Basics"',
-            courseTitle: 'JavaScript ES6+ Advanced',
-            timestamp: '2024-01-09T10:15:00Z',
-            description: 'Điểm số: 85/100'
-          }
-        ]);
-
-        setStats({
-          totalCoursesEnrolled: 5,
-          totalCoursesCompleted: 2,
-          totalLessonsCompleted: 45,
-          totalHoursLearned: 120,
-          currentStreak: 7,
-          totalCertificates: 2
-        });
+        console.log('📊 Loading dashboard for user:', userProfile.uid);
+        const dashboardData = await getStudentDashboardData(userProfile.uid);
+        
+        setEnrolledCourses(dashboardData.enrolledCourses);
+        setRecentActivities(dashboardData.recentActivities);
+        setStats(dashboardData.stats);
       } catch (error) {
         console.error('Error loading dashboard data:', error);
+        // Fallback to empty data
+        setEnrolledCourses([]);
+        setRecentActivities([]);
+        setStats({
+          totalCoursesEnrolled: 0,
+          totalCoursesCompleted: 0,
+          totalLessonsCompleted: 0,
+          totalHoursLearned: 0,
+          currentStreak: 0,
+          totalCertificates: 0
+        });
       } finally {
         setLoading(false);
       }
     };
 
     loadDashboardData();
-  }, []);
+  }, [userProfile?.uid]);
 
   const getActivityIcon = (type: RecentActivity['type']) => {
     switch (type) {
@@ -285,9 +230,12 @@ const StudentDashboard = () => {
                             </div>
                           </div>
                           <div className="flex-shrink-0">
-                            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+                            <Link 
+                              href={`/courses/${course.id}`}
+                              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+                            >
                               Tiếp tục học
-                            </button>
+                            </Link>
                           </div>
                         </div>
                       </div>
