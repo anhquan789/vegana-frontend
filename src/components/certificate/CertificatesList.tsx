@@ -4,7 +4,7 @@ import { ROUTES } from '@/constants/app';
 import { useAuth } from '@/contexts/AuthContext';
 import { getStudentCertificatesData } from '@/lib/dashboard/dashboardService';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Types for certificates
 interface Certificate {

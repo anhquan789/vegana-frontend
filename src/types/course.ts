@@ -5,7 +5,7 @@ export interface Course {
   thumbnail: string;
   instructorId: string;
   instructorName: string;
-  category: string;
+  category: '' | 'business' | 'design' | 'development';
   level: 'beginner' | 'intermediate' | 'advanced';
   price: number;
   originalPrice?: number;

@@ -13,7 +13,7 @@ import {
 interface CourseFormData {
   title: string;
   description: string;
-  category: string;
+  category: '' | 'business' | 'design' | 'development';
   level: 'beginner' | 'intermediate' | 'advanced';
   price: number;
   originalPrice?: number;
@@ -46,6 +46,7 @@ const CourseManagement = () => {
     whatYoullLearn: [''],
     tags: ['']
   });
+  const [newCategoryName, setNewCategoryName] = useState('');
 
   useEffect(() => {
     loadData();
@@ -217,6 +218,7 @@ const CourseManagement = () => {
                     <div className="flex items-center">
                       <div className="h-16 w-24 bg-gray-200 rounded-md mr-4">
                         {course.thumbnail && (
+                          // eslint-disable-next-line @next/next/no-img-element
                           <img 
                             src={course.thumbnail} 
                             alt={course.title}
@@ -306,23 +308,65 @@ const CourseManagement = () => {
                   />
                 </div>
                 
-                <div>
+                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Danh mục *
                   </label>
-                  <select
-                    required
-                    value={formData.category}
-                    onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="">Chọn danh mục</option>
-                    {categories.map(category => (
-                      <option key={category.id} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
+
+                  {categories.length === 0 ? (
+                   <div className="space-y-2">
+                     <p className="text-sm text-gray-500">Chưa có danh mục nào. Bạn có thể tạo nhanh:</p>
+                     <div className="flex gap-2">
+                       <input
+                         type="text"
+                         value={newCategoryName}
+                         onChange={(e) => setNewCategoryName(e.target.value)}
+                         placeholder="Tên danh mục"
+                         className="flex-1 px-3 py-2 border border-gray-300 rounded-md"
+                       />
+                       <button
+                         type="button"
+                         onClick={async () => {
+                           const name = newCategoryName.trim();
+                           if (!name) return;
+                           // Nếu có API: gọi createCourseCategory({ name }) ở đây
+                           // const created = await createCourseCategory({ name });
+                           // setCategories(prev => [...prev, created]);
+                           const created: CourseCategory = {
+                             id: Date.now().toString(),
+                             name,
+                             description: '',
+                             slug: name.toLowerCase().replace(/\s+/g, '-'),
+                             icon: '',
+                             color: '',
+                             courseCount: 0
+                           }; // client-side fallback
+                           setCategories(prev => [...prev, created]);
+                           setFormData(prev => ({ ...prev, category: name as '' | 'business' | 'design' | 'development' }));
+                           setNewCategoryName('');
+                         }}
+                         className="px-3 py-2 bg-blue-600 text-white rounded-md"
+                       >
+                         Tạo
+                       </button>
+                     </div>
+                   </div>
+                 ) : (
+                   <select
+                     required
+                     value={formData.category}
+                     onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value as '' | 'business' | 'design' | 'development' }))}
+                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer bg-white"
+                     style={{ WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
+                   >
+                     <option value="">Chọn danh mục</option>
+                     {categories.map(category => (
+                       <option key={category.id} value={category.name}>
+                         {category.name}
+                       </option>
+                     ))}
+                   </select>
+                 )}
                 </div>
               </div>
 

@@ -2,10 +2,10 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import {
-  EnrolledCourseWithProgress,
-  getStudentDashboardData,
-  LearningStats,
-  RecentActivity
+    EnrolledCourseWithProgress,
+    getStudentDashboardData,
+    LearningStats,
+    RecentActivity
 } from '@/lib/dashboard/dashboardService';
 import Image from 'next/image';
 import Link from 'next/link';

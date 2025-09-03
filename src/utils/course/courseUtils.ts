@@ -375,6 +375,27 @@ export const getCourseCategories = async (): Promise<CourseCategory[]> => {
   }
 };
 
+export const createCourseCategory = async (name: string): Promise<CourseCategory> => {
+  try {
+    const id = `cat_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    const newCat: CourseCategory = {
+      id,
+      name,
+      description: '',
+      slug: name.toLowerCase().replace(/\s+/g, '-'),
+      icon: '',
+      color: '',
+      courseCount: 0
+    };
+    await setDoc(doc(db, COLLECTIONS.CATEGORIES, id), newCat);
+    console.log('✅ Category created:', newCat);
+    return newCat;
+  } catch (error) {
+    console.error('❌ Error creating category:', error);
+    throw error;
+  }
+};
+
 // Utility functions
 export const formatDuration = (minutes: number): string => {
   if (minutes < 60) {
