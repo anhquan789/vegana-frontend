@@ -66,7 +66,10 @@ export default function MainNavigation() {
                   <NavLink href="/certificates">Chứng chỉ</NavLink>
                   <NavLink href="/payment/history">Thanh toán</NavLink>
                   {userProfile?.role === 'admin' && (
-                    <NavLink href="/admin">Quản trị</NavLink>
+                    <>
+                      <NavLink href="/admin">Quản trị</NavLink>
+                      <NavLink href="/admin/users">Quản lý người dùng</NavLink>
+                    </>
                   )}
                 </>
               )}

@@ -21,11 +21,14 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
+// Flag to track emulator connection
+let emulatorsConnected = false;
+
 // Connect to emulators in development (only on client side)
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development' && !emulatorsConnected) {
   // Firestore Emulator (port 8081 - changed from 8080)
   try {
-    connectFirestoreEmulator(db, '127.0.0.1', 8081);
+    connectFirestoreEmulator(db, 'localhost', 8081);
     console.log('✅ Connected to Firestore emulator on port 8081');
   } catch (error) {
     console.log('Firestore emulator connection info:', error);
@@ -33,7 +36,7 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   
   // Storage Emulator (port 9198 - changed from 9199)
   try {
-    connectStorageEmulator(storage, '127.0.0.1', 9198);
+    connectStorageEmulator(storage, 'localhost', 9198);
     console.log('✅ Connected to Storage emulator on port 9198');
   } catch (error) {
     console.log('Storage emulator connection info:', error);
@@ -41,11 +44,13 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
 
   // Auth Emulator (port 9098 - changed from 9099)
   try {
-    connectAuthEmulator(auth, 'http://127.0.0.1:9098');
+    connectAuthEmulator(auth, 'http://localhost:9098');
     console.log('✅ Connected to Auth emulator on port 9098');
   } catch (error) {
     console.log('Auth emulator connection info:', error);
   }
+  
+  emulatorsConnected = true;
 }
 
 export { auth, db, storage };
