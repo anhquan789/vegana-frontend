@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { runAllTests } from '../../test/firebase-integration-test';
 import FirebaseTest from '../../components/FirebaseTest';
 import VideoStorageTest from '../../components/VideoStorageTest';
 import FirebaseTestAdvanced from '../../components/test/FirebaseTestAdvanced';
-import SimpleTest from '../../components/test/SimpleTest';
 import SimpleFirestoreTest from '../../components/test/SimpleFirestoreTest';
+import SimpleTest from '../../components/test/SimpleTest';
+import { runAllTests } from '../../test/firebase-integration-test';
 
 function FirebaseIntegrationTest() {
   const [isRunning, setIsRunning] = useState(false);

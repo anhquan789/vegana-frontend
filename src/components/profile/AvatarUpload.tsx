@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import Image from 'next/image';
+import { useRef, useState } from 'react';
 
 interface AvatarUploadProps {
   currentAvatar?: string;

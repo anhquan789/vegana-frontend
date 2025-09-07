@@ -1,8 +1,8 @@
 'use client';
 
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { useState } from 'react';
 import { db } from '../../lib/firebase';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 export default function SimpleFirestoreTest() {
   const [isRunning, setIsRunning] = useState(false);

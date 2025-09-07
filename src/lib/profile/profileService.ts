@@ -1,7 +1,7 @@
-import { db, storage } from '../firebase';
-import { collection, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where, getDocs } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { UserProfile } from '../../types/profile';
+import { db, storage } from '../firebase';
 
 const COLLECTION_NAME = 'users';
 

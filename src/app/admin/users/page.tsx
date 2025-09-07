@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { useCallback, useEffect, useState } from 'react';
+import { deleteUserProfile, getUsersByRole, updateUserRole } from '../../../lib/profile/profileService';
 import { UserProfile } from '../../../types/profile';
-import { getUsersByRole, updateUserRole, deleteUserProfile } from '../../../lib/profile/profileService';
 
 export default function UserManagementPage() {
   const [users, setUsers] = useState<UserProfile[]>([]);

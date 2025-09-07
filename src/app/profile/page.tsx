@@ -1,16 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { UserProfile } from '../../types/profile';
-import { 
-  getUserProfile, 
-  createUserProfile, 
-  updateUserProfile, 
-  uploadAvatar,
-  deleteUserProfile 
-} from '../../lib/profile/profileService';
-import ProfileView from '../../components/profile/ProfileView';
+import { useEffect, useState } from 'react';
 import ProfileForm from '../../components/profile/ProfileForm';
+import ProfileView from '../../components/profile/ProfileView';
+import {
+    createUserProfile,
+    deleteUserProfile,
+    getUserProfile,
+    updateUserProfile,
+    uploadAvatar
+} from '../../lib/profile/profileService';
+import { UserProfile } from '../../types/profile';
 
 // Mock user ID for demo (replace with actual auth)
 const MOCK_USER_ID = 'demo-user-123';

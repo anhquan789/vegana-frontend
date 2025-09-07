@@ -1,7 +1,7 @@
 // Test Firebase Connection and Video Upload
+import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '../lib/firebase';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export const testFirebaseConnection = async () => {
   console.log('🧪 Testing Firebase Connection...');
