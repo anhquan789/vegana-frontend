@@ -85,22 +85,22 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     }
   }, [profile]);
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: unknown) => {
     setFormData(prev => {
       if (field.includes('.')) {
         const keys = field.split('.');
-        const newData = { ...prev };
-        let current: any = newData;
-        
+        const newData = { ...prev } as Record<string, unknown>;
+        let current: Record<string, unknown> = newData;
+
         for (let i = 0; i < keys.length - 1; i++) {
           if (!current[keys[i]]) current[keys[i]] = {};
-          current = current[keys[i]];
+          current = current[keys[i]] as Record<string, unknown>;
         }
-        
+
         current[keys[keys.length - 1]] = value;
-        return newData;
+        return newData as Partial<UserProfile>;
       } else {
-        return { ...prev, [field]: value };
+        return { ...prev, [field]: value } as Partial<UserProfile>;
       }
     });
   };
