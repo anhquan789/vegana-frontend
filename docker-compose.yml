@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    image: vegana-frontend:latest
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  # Optional: run firebase emulators for local dev, uncomment if needed
+  # firebase:
+  #   image: nwtgck/firebase-emulator:latest
+  #   ports:
+  #     - '8081:8081' # firestore
+  #     - '9098:9098' # auth
+  #     - '9198:9198' # storage
+  #   volumes:
+  #     - ./:/workspace
+  #   command: emulators:start --only firestore,auth,storage
