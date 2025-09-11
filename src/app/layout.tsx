@@ -1,3 +1,4 @@
+import ChatWidget from "@/components/chat/ChatWidget";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainNavigation from "@/components/common/MainNavigation";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -21,6 +22,7 @@ export default function RootLayout({
           <MainNavigation />
           <Breadcrumb />
           {children}
+          <ChatWidget />
         </AuthProvider>
       </body>
     </html>

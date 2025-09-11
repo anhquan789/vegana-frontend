@@ -69,6 +69,7 @@ export default function MainNavigation() {
                     <>
                       <NavLink href="/admin">Quản trị</NavLink>
                       <NavLink href="/admin/users">Quản lý người dùng</NavLink>
+                      <NavLink href="/admin/chat">Hỗ trợ khách hàng</NavLink>
                     </>
                   )}
                 </>
