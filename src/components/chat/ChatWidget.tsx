@@ -9,8 +9,12 @@ import {
     markSupportMessagesAsRead,
     sendSupportMessage
 } from '@/lib/chat/supportService';
+import { smartChatService } from '@/lib/chat/smartChatService';
 import { ChatMessage, ChatSession } from '@/types/chat';
-import { useEffect, useRef, useState } from 'react';
+import { ChatSuggestion } from '@/types/smartChat';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import QuickSuggestions from './QuickSuggestions';
+import TypingIndicator from './TypingIndicator';
 
 interface ChatWidgetProps {
   position?: 'bottom-right' | 'bottom-left';
@@ -24,6 +28,9 @@ export default function ChatWidget({ position = 'bottom-right' }: ChatWidgetProp
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [hasNewMessage, setHasNewMessage] = useState(false);
+  const [suggestions, setSuggestions] = useState<ChatSuggestion[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,45 +38,7 @@ export default function ChatWidget({ position = 'bottom-right' }: ChatWidgetProp
     ? 'bottom-6 right-6' 
     : 'bottom-6 left-6';
 
-  useEffect(() => {
-    if (user && isOpen && !session) {
-      loadUserSession();
-    }
-  }, [user, isOpen]);
-
-  useEffect(() => {
-    if (session) {
-      const unsubscribe = listenToSupportMessages(session.id, (newMessages) => {
-        setMessages(newMessages);
-        
-        // Check for new messages from admin
-        const lastMessage = newMessages[newMessages.length - 1];
-        if (lastMessage && lastMessage.senderRole === 'admin' && !isOpen) {
-          setHasNewMessage(true);
-        }
-        
-        // Mark messages as read when chat is open
-        if (isOpen && user) {
-          markSupportMessagesAsRead(session.id, user.uid);
-        }
-      });
-
-      return () => unsubscribe();
-    }
-  }, [session, isOpen, user]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  useEffect(() => {
-    if (isOpen) {
-      setHasNewMessage(false);
-      inputRef.current?.focus();
-    }
-  }, [isOpen]);
-
-  const loadUserSession = async () => {
+  const loadUserSession = useCallback(async () => {
     if (!user || !userProfile) return;
 
     try {
@@ -104,23 +73,114 @@ export default function ChatWidget({ position = 'bottom-right' }: ChatWidgetProp
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, userProfile]);
+
+  useEffect(() => {
+    if (user && isOpen && !session) {
+      loadUserSession();
+    }
+  }, [user, isOpen, session, loadUserSession]);
+
+  useEffect(() => {
+    if (session) {
+      const unsubscribe = listenToSupportMessages(session.id, (newMessages) => {
+        setMessages(newMessages);
+        
+        // Check for new messages from admin
+        const lastMessage = newMessages[newMessages.length - 1];
+        if (lastMessage && lastMessage.senderRole === 'admin' && !isOpen) {
+          setHasNewMessage(true);
+        }
+        
+        // Mark messages as read when chat is open
+        if (isOpen && user) {
+          markSupportMessagesAsRead(session.id, user.uid);
+        }
+
+        // Update suggestions based on last message
+        if (lastMessage) {
+          const newSuggestions = smartChatService.getSuggestions(lastMessage.content);
+          setSuggestions(newSuggestions);
+        }
+      });
+
+      return () => unsubscribe();
+    }
+  }, [session, isOpen, user]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setHasNewMessage(false);
+      inputRef.current?.focus();
+      
+      // Load initial suggestions
+      if (messages.length === 0) {
+        const initialSuggestions = smartChatService.getSuggestions();
+        setSuggestions(initialSuggestions);
+      }
+    }
+  }, [isOpen, messages.length]);
 
   const handleSendMessage = async () => {
     if (!newMessage.trim() || !session || !user || !userProfile) return;
 
+    const messageContent = newMessage.trim();
+    setNewMessage('');
+    setShowSuggestions(false);
+
     try {
+      // Send user message
       await sendSupportMessage(
         session.id,
         user.uid,
         userProfile.firstName || user.email?.split('@')[0] || 'User',
         'user',
-        newMessage.trim()
+        messageContent
       );
-      setNewMessage('');
+
+      // Check if should auto-reply
+      if (smartChatService.shouldShowAutoReply(messageContent)) {
+        setIsTyping(true);
+        
+        // Simulate typing delay
+        setTimeout(async () => {
+          const autoReply = smartChatService.generateSmartReply(messageContent);
+          
+          await sendSupportMessage(
+            session.id,
+            'system',
+            'Trợ lý ảo',
+            'admin',
+            autoReply
+          );
+          
+          setIsTyping(false);
+          
+          // Update suggestions after auto reply
+          const newSuggestions = smartChatService.getSuggestions(messageContent);
+          setSuggestions(newSuggestions);
+          setShowSuggestions(true);
+        }, 1500 + Math.random() * 1000); // Random delay 1.5-2.5s
+      } else {
+        // Update suggestions for manual response
+        const newSuggestions = smartChatService.getSuggestions(messageContent);
+        setSuggestions(newSuggestions);
+        setShowSuggestions(true);
+      }
     } catch (error) {
       console.error('Error sending message:', error);
+      setNewMessage(messageContent); // Restore message on error
     }
+  };
+
+  const handleSuggestionClick = (suggestion: ChatSuggestion) => {
+    setNewMessage(suggestion.text);
+    setShowSuggestions(false);
+    inputRef.current?.focus();
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -208,35 +268,73 @@ export default function ChatWidget({ position = 'bottom-right' }: ChatWidgetProp
               <div className="text-center text-gray-500 mt-8">
                 <p className="text-sm">Chúng tôi đã sẵn sàng hỗ trợ bạn!</p>
                 <p className="text-xs mt-1">Thường trả lời trong vòng 5 phút</p>
+                
+                {/* Welcome suggestions */}
+                <div className="mt-4 space-y-2">
+                  <p className="text-xs text-gray-400">Các câu hỏi thường gặp:</p>
+                  {suggestions.slice(0, 3).map((suggestion) => (
+                    <button
+                      key={suggestion.id}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className="block w-full text-left px-3 py-2 text-sm bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition-colors"
+                    >
+                      {suggestion.text}
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : (
-              messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.senderRole === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
+              <>
+                {messages.map((message) => (
                   <div
-                    className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
-                      message.senderRole === 'user'
-                        ? 'bg-blue-600 text-white rounded-br-none'
-                        : 'bg-gray-100 text-gray-800 rounded-bl-none'
-                    }`}
+                    key={message.id}
+                    className={`flex ${message.senderRole === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    <p>{message.content}</p>
-                    <p className={`text-xs mt-1 ${
-                      message.senderRole === 'user' ? 'text-blue-100' : 'text-gray-500'
-                    }`}>
-                      {new Date(message.timestamp).toLocaleTimeString('vi-VN', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                      })}
-                    </p>
+                    <div
+                      className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
+                        message.senderRole === 'user'
+                          ? 'bg-blue-600 text-white rounded-br-none'
+                          : message.senderId === 'system'
+                          ? 'bg-green-100 text-green-800 rounded-bl-none border border-green-200'
+                          : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                      }`}
+                    >
+                      {message.senderId === 'system' && (
+                        <div className="flex items-center space-x-1 mb-1">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span className="text-xs font-medium">Trợ lý ảo</span>
+                        </div>
+                      )}
+                      <div className="whitespace-pre-wrap">{message.content}</div>
+                      <p className={`text-xs mt-1 ${
+                        message.senderRole === 'user' 
+                          ? 'text-blue-100' 
+                          : message.senderId === 'system'
+                          ? 'text-green-600'
+                          : 'text-gray-500'
+                      }`}>
+                        {new Date(message.timestamp).toLocaleTimeString('vi-VN', { 
+                          hour: '2-digit', 
+                          minute: '2-digit' 
+                        })}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+                
+                {/* Typing indicator */}
+                <TypingIndicator isVisible={isTyping} senderName="Trợ lý ảo" />
+              </>
             )}
             <div ref={messagesEndRef} />
           </div>
+
+          {/* Quick suggestions */}
+          <QuickSuggestions
+            suggestions={suggestions}
+            onSuggestionClick={handleSuggestionClick}
+            isVisible={showSuggestions && !isTyping && messages.length > 0}
+          />
 
           {/* Input */}
           <div className="p-4 border-t">
