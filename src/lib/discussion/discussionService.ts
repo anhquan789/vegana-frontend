@@ -1,28 +1,28 @@
-import { 
-  collection, 
-  doc, 
-  addDoc, 
-  updateDoc, 
-  getDoc, 
-  getDocs, 
-  query, 
-  where, 
-  orderBy, 
-  onSnapshot,
-  serverTimestamp,
-  increment,
-  arrayUnion,
-  arrayRemove
-} from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase';
-import { 
-  Discussion, 
-  DiscussionReply, 
-  DiscussionModeration, 
-  DiscussionSettings,
-  DiscussionAttachment 
+import {
+    Discussion,
+    DiscussionAttachment,
+    DiscussionModeration,
+    DiscussionReply,
+    DiscussionSettings
 } from '@/types/discussion';
+import {
+    addDoc,
+    arrayRemove,
+    arrayUnion,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    increment,
+    onSnapshot,
+    orderBy,
+    query,
+    serverTimestamp,
+    updateDoc,
+    where
+} from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 export class DiscussionService {
   private static instance: DiscussionService;

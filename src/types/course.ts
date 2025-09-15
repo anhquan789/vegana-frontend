@@ -1,29 +1,75 @@
+export interface CourseCategory {
+  id: string;
+  name: string;
+  description?: string;
+  slug: string;
+  icon?: string;
+  color?: string;
+  parentId?: string; // For hierarchical categories
+  sortOrder: number;
+  isActive: boolean;
+  courseCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CourseMetadata {
+  duration: number; // in minutes
+  level: 'beginner' | 'intermediate' | 'advanced';
+  language: string;
+  tags: string[];
+  prerequisites: string[];
+  learningObjectives: string[];
+  certificateTemplate?: string;
+  completionCriteria: {
+    passQuizzes: boolean;
+    completeAllLessons: boolean;
+    minimumScore?: number;
+  };
+}
+
+export interface CourseMedia {
+  id: string;
+  type: 'video' | 'image' | 'document' | 'audio';
+  url: string;
+  fileName: string;
+  fileSize: number;
+  mimeType: string;
+  thumbnail?: string;
+  duration?: number; // for video/audio
+  uploadedAt: string;
+  uploadedBy: string;
+}
+
 export interface Course {
   id: string;
   title: string;
   description: string;
-  thumbnail: string;
+  shortDescription?: string;
+  slug: string;
+  thumbnail?: string;
+  coverImage?: string;
   instructorId: string;
   instructorName: string;
-  category: '' | 'business' | 'design' | 'development';
-  level: 'beginner' | 'intermediate' | 'advanced';
+  instructorAvatar?: string;
+  categoryId: string;
+  category?: CourseCategory;
+  metadata: CourseMetadata;
   price: number;
   originalPrice?: number;
   currency: string;
-  duration: number; // in minutes
-  language: string;
-  status: 'draft' | 'published' | 'archived';
-  tags: string[];
-  requirements: string[];
-  whatYoullLearn: string[];
+  status: 'draft' | 'published' | 'archived' | 'under_review';
   totalLessons: number;
   totalStudents: number;
+  enrollmentCount: number;
   rating: number;
   reviewCount: number;
+  isPromoted: boolean;
+  promotionEndDate?: string;
   createdAt: string;
   updatedAt: string;
+  publishedAt?: string;
   lastModified: string;
-  slug: string;
   socialLinks?: {
     fanpage?: string;
     group?: string;
@@ -117,17 +163,6 @@ export interface LessonProgress {
   score?: number;
 }
 
-export interface CourseCategory {
-  id: string;
-  name: string;
-  description: string;
-  slug: string;
-  parentId?: string;
-  icon: string;
-  color: string;
-  courseCount: number;
-}
-
 export interface CourseReview {
   id: string;
   courseId: string;
@@ -149,4 +184,48 @@ export interface CourseCertificate {
   completionDate: string;
   certificateUrl: string;
   verificationCode: string;
+}
+
+// Additional types for CRUD operations
+export interface CreateCourseData {
+  title: string;
+  description: string;
+  shortDescription?: string;
+  categoryId: string;
+  price: number;
+  currency: string;
+  metadata: Omit<CourseMetadata, 'duration'>;
+  thumbnail?: File;
+  coverImage?: File;
+}
+
+export interface UpdateCourseData extends Partial<CreateCourseData> {
+  id: string;
+  status?: Course['status'];
+}
+
+// Search and Filter Types
+export interface CourseFilters {
+  category?: string;
+  level?: string;
+  price?: 'free' | 'paid' | 'all';
+  rating?: number;
+  duration?: string;
+  language?: string;
+  tags?: string[];
+  instructor?: string;
+}
+
+export interface CourseSortOptions {
+  field: 'title' | 'price' | 'rating' | 'enrollmentCount' | 'createdAt' | 'updatedAt';
+  direction: 'asc' | 'desc';
+}
+
+export interface CourseSearchResult {
+  courses: Course[];
+  total: number;
+  page: number;
+  limit: number;
+  filters: CourseFilters;
+  sort: CourseSortOptions;
 }

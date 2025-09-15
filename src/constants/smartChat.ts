@@ -1,4 +1,4 @@
-import { QuickQuestion, AutoReply } from '@/types/smartChat';
+import { AutoReply, QuickQuestion } from '@/types/smartChat';
 
 export const QUICK_QUESTIONS: QuickQuestion[] = [
   {

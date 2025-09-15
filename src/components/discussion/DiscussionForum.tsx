@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Discussion } from '@/types/discussion';
-import { discussionService } from '@/lib/discussion/discussionService';
 import { useAuth } from '@/contexts/AuthContext';
+import { discussionService } from '@/lib/discussion/discussionService';
+import { Discussion } from '@/types/discussion';
+import { useCallback, useEffect, useState } from 'react';
 
 interface DiscussionForumProps {
   courseId: string;

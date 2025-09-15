@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Certificate, UserBadge, Badge } from '@/types/certificate';
 import { useAuth } from '@/contexts/AuthContext';
+import { Badge, Certificate, UserBadge } from '@/types/certificate';
+import { useCallback, useEffect, useState } from 'react';
 
 interface CertificatesPageProps {
   userId?: string; // If provided, show certificates for specific user (admin view)

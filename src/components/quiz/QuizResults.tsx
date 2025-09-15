@@ -1,6 +1,6 @@
 'use client';
 
-import { QuizAttempt, Quiz } from '@/types/quiz';
+import { Quiz, QuizAttempt } from '@/types/quiz';
 import { useState } from 'react';
 
 interface QuizResultsProps {

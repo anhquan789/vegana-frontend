@@ -1,19 +1,19 @@
-import { 
-  collection, 
-  doc, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  getDoc, 
-  getDocs, 
-  query, 
-  where, 
-  orderBy, 
-  onSnapshot,
-  serverTimestamp
-} from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { Quiz, QuizAttempt, QuizAnswer, QuizQuestion } from '@/types/quiz';
+import { Quiz, QuizAnswer, QuizAttempt, QuizQuestion } from '@/types/quiz';
+import {
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+    onSnapshot,
+    orderBy,
+    query,
+    serverTimestamp,
+    updateDoc,
+    where
+} from 'firebase/firestore';
 
 export class QuizService {
   private static instance: QuizService;

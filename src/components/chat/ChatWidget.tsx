@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import { smartChatService } from '@/lib/chat/smartChatService';
 import {
     closeSupportSession,
     createSupportSession,
@@ -9,7 +10,6 @@ import {
     markSupportMessagesAsRead,
     sendSupportMessage
 } from '@/lib/chat/supportService';
-import { smartChatService } from '@/lib/chat/smartChatService';
 import { ChatMessage, ChatSession } from '@/types/chat';
 import { ChatSuggestion } from '@/types/smartChat';
 import { useCallback, useEffect, useRef, useState } from 'react';

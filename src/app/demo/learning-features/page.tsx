@@ -1,7 +1,7 @@
-import QuizTaker from '@/components/quiz/QuizTaker';
-import QuizResults from '@/components/quiz/QuizResults';
-import DiscussionForum from '@/components/discussion/DiscussionForum';
 import CertificatesPage from '@/components/certificate/CertificatesPage';
+import DiscussionForum from '@/components/discussion/DiscussionForum';
+import QuizResults from '@/components/quiz/QuizResults';
+import QuizTaker from '@/components/quiz/QuizTaker';
 import { Quiz, QuizAttempt } from '@/types/quiz';
 import { useState } from 'react';
 
