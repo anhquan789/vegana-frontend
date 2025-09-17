@@ -1,7 +1,7 @@
 import { auth, db } from '@/lib/firebase';
 import { UserProfile } from '@/types/auth';
-import { getFunctions, httpsCallable } from 'firebase/functions';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 // Firebase Functions instance
 const functions = getFunctions();

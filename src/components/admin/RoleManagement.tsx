@@ -1,9 +1,9 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
-import { updateUserRole, getAllUsersWithRoles } from '@/lib/auth/roleService';
+import { getAllUsersWithRoles, updateUserRole } from '@/lib/auth/roleService';
 import { UserProfile } from '@/types/auth';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const RoleManagement = () => {
   const { userProfile } = useAuth();

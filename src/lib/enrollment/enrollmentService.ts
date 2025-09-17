@@ -1,24 +1,24 @@
 import { db } from '@/lib/firebase';
-import { 
-  Enrollment, 
-  CourseProgress, 
-  LessonProgress, 
-  Course 
+import {
+    Course,
+    CourseProgress,
+    Enrollment,
+    LessonProgress
 } from '@/types/course';
 import {
-  collection,
-  doc,
-  addDoc,
-  getDoc,
-  getDocs,
-  updateDoc,
-  query,
-  where,
-  orderBy,
-  serverTimestamp,
-  onSnapshot,
-  increment,
-  writeBatch
+    addDoc,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    increment,
+    onSnapshot,
+    orderBy,
+    query,
+    serverTimestamp,
+    updateDoc,
+    where,
+    writeBatch
 } from 'firebase/firestore';
 
 const COLLECTIONS = {

@@ -1,27 +1,27 @@
 import { db, storage } from '@/lib/firebase';
-import { Course, CourseCategory, CreateCourseData, UpdateCourseData, CourseFilters, CourseSortOptions, CourseSearchResult, CourseMedia } from '@/types/course';
+import { Course, CourseCategory, CourseFilters, CourseMedia, CourseSearchResult, CourseSortOptions, CreateCourseData, UpdateCourseData } from '@/types/course';
 import {
-  collection,
-  doc,
-  addDoc,
-  getDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  query,
-  where,
-  orderBy,
-  limit as firestoreLimit,
-  startAfter,
-  serverTimestamp,
-  increment as firestoreIncrement,
-  setDoc
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    increment as firestoreIncrement,
+    limit as firestoreLimit,
+    getDoc,
+    getDocs,
+    orderBy,
+    query,
+    serverTimestamp,
+    setDoc,
+    startAfter,
+    updateDoc,
+    where
 } from 'firebase/firestore';
 import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject
+    deleteObject,
+    getDownloadURL,
+    ref,
+    uploadBytes
 } from 'firebase/storage';
 
 const COLLECTIONS = {

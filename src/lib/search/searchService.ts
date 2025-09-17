@@ -1,14 +1,14 @@
 import { db } from '@/lib/firebase';
-import { Course, CourseFilters, CourseSortOptions, CourseSearchResult } from '@/types/course';
+import { Course, CourseFilters, CourseSearchResult, CourseSortOptions } from '@/types/course';
 import {
-  collection,
-  query,
-  where,
-  orderBy,
-  limit as firestoreLimit,
-  startAfter,
-  getDocs,
-  DocumentSnapshot
+    collection,
+    DocumentSnapshot,
+    limit as firestoreLimit,
+    getDocs,
+    orderBy,
+    query,
+    startAfter,
+    where
 } from 'firebase/firestore';
 
 export class SearchService {
