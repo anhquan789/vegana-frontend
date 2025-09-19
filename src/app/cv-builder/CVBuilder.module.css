@@ -1,0 +1,346 @@
+.cvBuilder {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.header {
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+  padding: 40px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.headerContent h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.headerContent p {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.createButton {
+  padding: 12px 24px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.createButton:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+.content {
+  padding: 40px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: #6c757d;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.emptyIcon {
+  font-size: 5rem;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.emptyState h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0 0 12px 0;
+}
+
+.emptyState p {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin: 0 0 32px 0;
+}
+
+.primaryButton {
+  padding: 14px 28px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primaryButton:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+.cvsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.cvCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.cvCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+}
+
+.cvHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.cvTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  flex: 1;
+  margin-right: 12px;
+}
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.draft {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.published {
+  background: #d4edda;
+  color: #155724;
+}
+
+.archived {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.cvMeta {
+  margin-bottom: 20px;
+}
+
+.cvMeta p {
+  margin: 0 0 6px 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.template {
+  font-weight: 500;
+  color: #495057 !important;
+}
+
+.downloads {
+  color: #28a745 !important;
+  font-weight: 500;
+}
+
+.cvActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.editButton,
+.previewButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.editButton {
+  background: #007bff;
+  color: white;
+}
+
+.editButton:hover {
+  background: #0056b3;
+}
+
+.previewButton {
+  background: #6c757d;
+  color: white;
+}
+
+.previewButton:hover {
+  background: #5a6268;
+}
+
+.dropdown {
+  position: relative;
+  margin-left: auto;
+}
+
+.moreButton {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.moreButton:hover {
+  background: #f8f9fa;
+  color: #495057;
+}
+
+.dropdownContent {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+  display: none;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+.dropdownContent button {
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #495057;
+  transition: background 0.2s ease;
+}
+
+.dropdownContent button:hover {
+  background: #f8f9fa;
+}
+
+.dropdownContent hr {
+  margin: 4px 0;
+  border: none;
+  border-top: 1px solid #e9ecef;
+}
+
+.deleteButton {
+  color: #dc3545 !important;
+}
+
+.deleteButton:hover {
+  background: #f8d7da !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 24px 16px;
+  }
+  
+  .headerContent h1 {
+    font-size: 2rem;
+  }
+  
+  .content {
+    padding: 24px 16px;
+  }
+  
+  .cvsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .cvCard {
+    padding: 20px;
+  }
+  
+  .cvHeader {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .cvTitle {
+    margin-right: 0;
+  }
+  
+  .cvActions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

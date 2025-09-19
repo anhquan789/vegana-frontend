@@ -1,0 +1,82 @@
+.sectionEditor {
+  padding: 24px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.sectionTitle {
+  flex: 1;
+}
+
+.titleInput {
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 400px;
+}
+
+.titleInput:hover,
+.titleInput:focus {
+  background: #f8f9fa;
+  outline: none;
+  border: 1px solid #007bff;
+}
+
+.sectionControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.visibilityToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #495057;
+}
+
+.visibilityToggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #007bff;
+}
+
+.sectionContent {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 400px;
+}
+
+.placeholderEditor {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6c757d;
+}
+
+.placeholderEditor h3 {
+  margin: 0 0 12px 0;
+  color: #495057;
+}
+
+.placeholderEditor p {
+  margin: 0;
+  font-size: 1.1rem;
+}
